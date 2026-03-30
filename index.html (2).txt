@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Dark Fury STUDIO | Portfolio</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s;
+    }
+
+    /* Variables : Dark Theme (default) */
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #111117;
+      --card-bg: #181820;
+      --text-primary: #f0f0f8;
+      --text-secondary: #b0b0c0;
+      --accent: #a855f7;
+      --accent-glow: rgba(168, 85, 247, 0.5);
+      --border: #2a2a35;
+      --header-bg: rgba(10, 10, 15, 0.85);
+      --shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+      --btn-hover: #c084fc;
+      --whatsapp-bg: #25D366;
+    }
+
+    body.light {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --card-bg: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --accent: #7c3aed;
+      --accent-glow: rgba(124, 58, 237, 0.3);
+      --border: #e2e8f0;
+      --header-bg: rgba(255, 255, 255, 0.9);
+      --shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Gradient Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(circle at 20% 30%, rgba(120, 40, 200, 0.15) 0%, rgba(0,0,0,0) 60%),
+                  radial-gradient(circle at 80% 70%, rgba(0, 200, 255, 0.1) 0%, transparent 70%);
+      animation: bgShift 12s infinite alternate ease-in-out;
+    }
+    body.light .animated-bg {
+      background: radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.08) 0%, transparent 60%),
+                  radial-gradient(circle at 80% 70%, rgba(0,150,200,0.05) 0%, transparent 70%);
+    }
+    @keyframes bgShift {
+      0% { opacity: 0.6; transform: scale(1);}
+      100% { opacity: 1; transform: scale(1.02);}
+    }
+
+    /* particles canvas overlay */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Header / Nav */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: var(--header-bg);
+      border-bottom: 1px solid var(--border);
+      transition: 0.25s;
+    }
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-left img {
+      height: 42px;
+      width: auto;
+      transition: 0.2s;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: 0.2s;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .theme-toggle {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: 0.2s;
+      color: var(--text-primary);
+    }
+    .theme-toggle:hover { transform: scale(1.05); background: var(--accent); color: white;}
+
+    /* hero section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 3rem;
+    }
+    .profile-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+      margin-bottom: 1.8rem;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px);}
+      50% { transform: translateY(-8px);}
+      100% { transform: translateY(0px);}
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .hero .animated-text {
+      font-size: 1.3rem;
+      margin: 1rem 0;
+      letter-spacing: 1px;
+    }
+    .scroll-down-icon {
+      margin-top: 2rem;
+      font-size: 2.2rem;
+      color: var(--accent);
+      animation: bounce 1.8s infinite;
+      cursor: pointer;
+      display: inline-block;
+    }
+    @keyframes bounce {
+      0%,100%{ transform: translateY(0);}
+      50%{ transform: translateY(10px);}
+    }
+
+    /* sections */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    .section-title:after {
+      content: '';
+      width: 80px;
+      height: 4px;
+      background: var(--accent);
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      position: absolute;
+      border-radius: 4px;
+    }
+
+    /* Cards grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 28px;
+      overflow: hidden;
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 35px -12px rgba(0,0,0,0.4);
+    }
+    /* lightning effect */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,215,0,0.4) 0%, rgba(255,255,255,0) 70%);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      border-radius: 28px;
+      z-index: 2;
+    }
+    .card:hover::before {
+      opacity: 1;
+    }
+    .card-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: #2a2a35;
+      display: block;
+      border-bottom: 2px solid var(--border);
+    }
+    .card h3 {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin: 1rem 1.2rem 0.5rem;
+    }
+    .card p {
+      color: var(--text-secondary);
+      margin: 0 1.2rem 1rem;
+      line-height: 1.4;
+      font-size: 0.9rem;
+    }
+    .btn-card {
+      margin: 0 1.2rem 1.5rem;
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), #b77cff);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      animation: pulseBtn 1.8s infinite;
+    }
+    .btn-card:hover {
+      transform: scale(1.05);
+      background: var(--btn-hover);
+      box-shadow: 0 0 12px var(--accent);
+    }
+    @keyframes pulseBtn {
+      0% { box-shadow: 0 0 0 0 rgba(168,85,247,0.4);}
+      70% { box-shadow: 0 0 0 6px rgba(168,85,247,0);}
+      100% { box-shadow: 0 0 0 0 rgba(0,0,0,0);}
+    }
+
+    /* Price Accordion */
+    .price-accordion {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 0.5rem;
+      border: 1px solid var(--border);
+    }
+    .accordion-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .accordion-header {
+      background: transparent;
+      padding: 1.2rem 1.5rem;
+      font-size: 1.4rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.2s;
+    }
+    .accordion-header:hover { background: rgba(168,85,247,0.1);}
+    .accordion-header i {
+      transition: transform 0.3s;
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+      padding: 0 1.5rem;
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      margin: 0 0.5rem 0.5rem;
+    }
+    .accordion-content.active {
+      max-height: 500px;
+      padding: 1rem 1.5rem;
+    }
+    .price-detail p {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    /* about me */
+    .about-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-img img {
+      max-width: 280px;
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      border: 3px solid var(--accent);
+      width: 100%;
+    }
+    .about-info {
+      flex: 1;
+      min-width: 260px;
+    }
+    .skills span {
+      display: inline-block;
+      background: var(--accent);
+      padding: 4px 14px;
+      border-radius: 30px;
+      margin: 5px;
+      color: white;
+      font-size: 0.85rem;
+    }
+    .social-icons {
+      display: flex;
+      gap: 1.5rem;
+      margin: 2rem 0 1rem;
+    }
+    .social-icons a {
+      font-size: 2rem;
+      color: var(--text-primary);
+      transition: 0.2s;
+    }
+    .social-icons a:hover { color: var(--accent); transform: scale(1.1);}
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    /* Go to top button */
+    .go-top {
+      position: fixed;
+      bottom: 80px;
+      right: 24px;
+      background: var(--accent);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+      box-shadow: 0 4px 12px black;
+      color: white;
+      font-size: 1.4rem;
+    }
+    .go-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    /* whatsapp floating */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--whatsapp-bg);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+      transition: 0.2s;
+      z-index: 99;
+      animation: pulse-wa 1.5s infinite;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); background: #20b859;}
+    @keyframes pulse-wa {
+      0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7);}
+      70% { box-shadow: 0 0 0 12px rgba(37,211,102,0);}
+      100% { box-shadow: 0 0 0 0 rgba(0,0,0,0.2);}
+    }
+    @media (max-width: 760px) {
+      .nav-container { flex-wrap: wrap; justify-content: center; gap: 12px;}
+      .nav-links { gap: 1.2rem; }
+      .hero h1 { font-size: 2rem; }
+      .section-title { font-size: 1.8rem;}
+    }
+    /* logo hidden normally, visible on scroll */
+    .logo-left {
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+    }
+    .logo-left.visible-logo {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+<div class="animated-bg"></div>
+<canvas id="particles-canvas"></canvas>
+
+<header id="header">
+  <div class="nav-container">
+    <div class="logo-left" id="scrollLogo">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23a855f7'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='white' font-weight='bold'%3EDF%3C/text%3E%3C/svg%3E" alt="logo" style="width:42px; height:42px; border-radius:12px;">
+    </div>
+    <div class="nav-links">
+      <a href="#example">Example</a>
+      <a href="#price">Price</a>
+      <a href="#about">About me</a>
+    </div>
+    <div class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i> <span id="themeText">Dark</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero Section -->
+  <section class="hero">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='95' fill='%23333'/%3E%3Ctext x='100' y='130' font-size='60' text-anchor='middle' fill='white'%3E👤%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-img" id="profileImg">
+    <h1>Dark Fury STUDIO</h1>
+    <div class="animated-text">Welcome to Dark Fury STUDIO Portfolio <i class="fas fa-bolt"></i></div>
+    <div class="scroll-down-icon" id="scrollDownBtn">
+      <i class="fas fa-chevron-circle-down"></i>
+    </div>
+  </section>
+
+  <!-- Projects / Example Section -->
+  <section id="example" class="container">
+    <h2 class="section-title">🔥 Creative Projects</h2>
+    <div class="cards-grid" id="projectsGrid"></div>
+  </section>
+
+  <!-- Price Section -->
+  <section id="price" class="container">
+    <h2 class="section-title">💰 Pricing Plans</h2>
+    <div class="price-accordion" id="priceAccordion"></div>
+  </section>
+
+  <!-- About Me -->
+  <section id="about" class="container">
+    <h2 class="section-title">👨‍🎨 About Me</h2>
+    <div class="about-flex">
+      <div class="about-img">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23404050'/%3E%3Ccircle cx='150' cy='120' r='50' fill='%23b87333'/%3E%3Crect x='100' y='180' width='100' height='100' fill='%23654c3c'/%3E%3Ctext x='150' y='270' text-anchor='middle' fill='white' font-size='24'%3EME%3C/text%3E%3C/svg%3E" alt="my.png">
+      </div>
+      <div class="about-info">
+        <h3>Hi... I am Tharusha Lochana Gayan</h3>
+        <p><strong>PROFESSIONAL ARTIST & GRAPHIC DESIGNER</strong></p>
+        <p><i class="fas fa-user"></i> Name - H.L Tharusha Lochana Gayan<br>
+        <i class="fas fa-map-marker-alt"></i> Country - Sri Lanka | District - Colombo | Western Province<br>
+        <i class="fas fa-language"></i> Language - Sinhala, English<br>
+        <i class="fas fa-briefcase"></i> Job - Artist & Graphic Designer</p>
+        <h4>EXPERIENCE</h4>
+        <p>Dark Fury Studio 2025 - 2026<br>Director (Graphic Designer)</p>
+        <div class="skills">
+          <span>Adobe Photoshop 98%</span><span>Adobe illustrator 98%</span><span>Adobe indesing 89%</span>
+          <span>Adobe Prime Pro 80%</span><span>Adobe After Effect 80%</span><span>Capcut 99%</span>
+        </div>
+        <div class="social-icons">
+          <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    Design by: TLG Lanka Co.™ DARK FURY STUDIO | © 2025 | Sri Lanka.
+  </footer>
+</main>
+
+<div class="go-top" id="goTopBtn"><i class="fas fa-arrow-up"></i></div>
+<a class="whatsapp-float" href="https://wa.me/+94741629556" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+
+<script>
+  // Project Data
+  const projects = [
+    { title: "Drawing", desc: "Creative drawing portfolio | high resolution artworks", link: "https://drive.google.com/drive/folders/1pAiIRkkt78pEASLc9BXlyPOLFf1nk28A", imgLabel: "draw.jpg" },
+    { title: "PS", desc: "Photoshop manipulations & compositions", link: "https://drive.google.com/drive/folders/1PebpFwRIq6yqHJrhk7aQv2OBRf7TYOvd", imgLabel: "ps.jpg" },
+    { title: "PS", desc: "Advanced Photoshop design concepts", link: "https://drive.google.com/drive/folders/13VP9oxXbXAcHsO75FnAulyNuEsQ0B-a3", imgLabel: "ps2.jpg" },
+    { title: "PS", desc: "Creative retouching & composites", link: "https://drive.google.com/drive/folders/1KEN2DYw0b8XkD_jIfAnbdv1MBUjJdWjA", imgLabel: "ps3.jpg" },
+    { title: "AI", desc: "Adobe Illustrator vector masterpieces", link: "https://drive.google.com/drive/folders/12Z2tpqxWZsMC2VyTAs7zpM7FZa1qVlvK", imgLabel: "ai.jpg" },
+    { title: "AI", desc: "Illustrator branding & logos", link: "https://drive.google.com/drive/folders/1_vSaAdwM9YmaAuwelvHHwemXxZe_DRx6", imgLabel: "ai2.jpg" },
+    { title: "AI", desc: "Advanced vector art & icons", link: "https://drive.google.com/drive/folders/1MErfSuXY71zE-ww7UpI3c2EHeYcL7z9d", imgLabel: "ai3.jpg" },
+    { title: "PR", desc: "Premiere Pro video editing", link: "https://drive.google.com/drive/folders/1ZbD-A7dDoKN_LeXLOLUp62J6mmd3bV-z", imgLabel: "pr.jpg" },
+    { title: "AE", desc: "After Effects motion graphics", link: "https://drive.google.com/drive/folders/1Az3j0sR0UbTyLjcLw65763XYzAjddLmj", imgLabel: "ae.jpg" }
+  ];
+  // generate cards with placeholder image (1920x1920 style svg)
+  function buildProjects() {
+    const grid = document.getElementById('projectsGrid');
+    grid.innerHTML = '';
+    projects.forEach(proj => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--x', `${x}%`);
+        card.style.setProperty('--y', `${y}%`);
+      });
+      card.innerHTML = `
+        <img class="card-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%2322222e'/%3E%3Ctext x='200' y='200' font-size='32' text-anchor='middle' fill='%23a855f7' dy='.3em'%3E${proj.title}%3C/text%3E%3C/svg%3E" alt="project img">
+        <h3>${proj.title}</h3>
+        <p>${proj.desc}<br>✨ High quality assets</p>
+        <a href="${proj.link}" target="_blank" class="btn-card">Get Now <i class="fas fa-arrow-right"></i></a>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // Price Accordion data & dynamic
+  const priceCategories = [
+    { name: "Logo Design", details: ["➤ 2 Color Normal : Rs 2500/=", "➤ Full Color Co. Brand : Rs 5000 - 15,000/=", "➤ with Ai, PSD full file: Rs 1500/= (before charge)"] },
+    { name: "Social Media Post Design", details: ["➤ 2 Color Normal : Rs 800/=", "➤ Full Color All in One : Rs 1200/=", "➤ with Ai, PSD full file : Rs 300/= (before charge)"] },
+    { name: "Banner Design", details: ["➤ 4 Color Quality: Rs 1000/=", "➤ High Quality : Rs 1200/=", "➤ with Ai, PSD full file: Rs (pre of Charge)"] },
+    { name: "Social Media Cover Photo", details: ["➤ 2 Color Normal : Rs 800/=", "➤ Full Color High Quality : Rs 1200/=", "➤ with Ai, PSD full file: Rs (pre of Charge)"] },
+    { name: "Book Cover Page Design", details: ["➤ 2 Color Normal : Rs 800/=", "➤ Full Color High Quality : Rs 1200/=", "➤ with Ai, PSD full file: Rs 300/= (before charge)"] },
+    { name: "Package & Label Design", details: ["➤ 2 Color Normal: Rs 800/=", "➤ Full Color High Quality: Rs 1200/=", "➤ with Ai, PSD full file : Rs 300/= (before charge)"] },
+    { name: "Photo Editing", details: ["➤ Standard Price: Rs 50 - 1500/="] },
+    { name: "Making cartoons", details: ["➤ One Minutes price: Rs 200/="] },
+    { name: "Video Editing (Normal)", details: ["➤ Standard Price: Rs 1000 - 15,000/="] }
+  ];
+
+  function buildAccordion() {
+    const container = document.getElementById('priceAccordion');
+    container.innerHTML = '';
+    priceCategories.forEach((cat, idx) => {
+      const item = document.createElement('div');
+      item.className = 'accordion-item';
+      const header = document.createElement('div');
+      header.className = 'accordion-header';
+      header.innerHTML = `<span>${cat.name}</span><i class="fas fa-chevron-down"></i>`;
+      const content = document.createElement('div');
+      content.className = 'accordion-content';
+      let detailsHtml = '';
+      cat.details.forEach(d => { detailsHtml += `<p>${d}</p>`; });
+      content.innerHTML = detailsHtml;
+      header.addEventListener('click', () => {
+        const allContents = document.querySelectorAll('.accordion-content');
+        const allHeaders = document.querySelectorAll('.accordion-header i');
+        const isActive = content.classList.contains('active');
+        allContents.forEach(c => c.classList.remove('active'));
+        allHeaders.forEach(icon => icon.classList.remove('fa-chevron-up'));
+        allHeaders.forEach(icon => icon.classList.add('fa-chevron-down'));
+        if (!isActive) {
+          content.classList.add('active');
+          header.querySelector('i').classList.remove('fa-chevron-down');
+          header.querySelector('i').classList.add('fa-chevron-up');
+        } else {
+          content.classList.remove('active');
+          header.querySelector('i').classList.remove('fa-chevron-up');
+          header.querySelector('i').classList.add('fa-chevron-down');
+        }
+      });
+      item.appendChild(header);
+      item.appendChild(content);
+      container.appendChild(item);
+    });
+  }
+
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const themeTextSpan = document.getElementById('themeText');
+  function setTheme(theme) {
+    if (theme === 'light') {
+      document.body.classList.add('light');
+      themeTextSpan.innerText = 'Light';
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i> <span id="themeText">Light</span>';
+    } else {
+      document.body.classList.remove('light');
+      themeTextSpan.innerText = 'Dark';
+      themeToggle.innerHTML = '<i class="fas fa-moon"></i> <span id="themeText">Dark</span>';
+    }
+  }
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  setTheme(savedTheme);
+  themeToggle.addEventListener('click', () => {
+    const isLight = document.body.classList.contains('light');
+    if (isLight) {
+      setTheme('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      setTheme('light');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+
+  // Go to top visibility & scroll logo show
+  const goTopBtn = document.getElementById('goTopBtn');
+  const scrollLogoDiv = document.getElementById('scrollLogo');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      goTopBtn.classList.add('show');
+      scrollLogoDiv.classList.add('visible-logo');
+    } else {
+      goTopBtn.classList.remove('show');
+      scrollLogoDiv.classList.remove('visible-logo');
+    }
+  });
+  goTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.getElementById('scrollDownBtn').addEventListener('click', () => {
+    document.getElementById('example').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // particles animation simple floating dots
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2.5 + 1,
+        alpha: Math.random() * 0.5 + 0.2,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.2,
+      });
+    }
+  }
+  function drawParticles() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(168, 85, 247, ${p.alpha * 0.6})`;
+      ctx.fill();
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+    });
+    requestAnimationFrame(drawParticles);
+  }
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    initParticles();
+  });
+  resizeCanvas();
+  initParticles();
+  drawParticles();
+
+  // Profile image improvement (real png simulation, but we keep demo)
+  // Add actual placeholder but user can replace later
+  const profileImg = document.querySelector('.profile-img');
+  profileImg.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='95' fill='%238b5cf6'/%3E%3Ctext x='100' y='140' font-size='70' text-anchor='middle' fill='white'%3E🔥%3C/text%3E%3C/svg%3E";
+  document.querySelector('.about-img img').src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%234a2c6e'/%3E%3Ccircle cx='150' cy='120' r='55' fill='%23ffcc88'/%3E%3Ctext x='150' y='260' text-anchor='middle' fill='white' font-size='26'%3ETHARUSHA%3C/text%3E%3C/svg%3E";
+
+  buildProjects();
+  buildAccordion();
+  // add lightning effect update on card move already done
+</script>
+</body>
+</html>
